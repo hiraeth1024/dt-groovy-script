@@ -19,14 +19,14 @@ import java.util.List
 import java.util.Map
 
 /**
- * 地方经济四期-内蒙古自治区各区县预决算报告-鄂尔多斯-鄂托克前旗-预算
+ * 地方经济四期-内蒙古自治区各区县预决算报告-鄂尔多斯-准格尔旗-预算
  *
 
 
- * 起始请求链接: https://czt.nmg.gov.cn/yjs/business/basic/select?id=150623zf&type=2&p=1
+ * 起始请求链接: https://czt.nmg.gov.cn/yjs/business/basic/select?id=150622zf&type=2&p=1
  * 起始请求方式: GET
  */
-class EEDS_ETKQQ_YS implements IparseScript {
+class EEDS_ZGEQ_YS implements IparseScript {
 
     @Override
     AntiPageRequest beforeDownloader(AntiPageRequest request) {
@@ -64,7 +64,7 @@ class EEDS_ETKQQ_YS implements IparseScript {
                 pageParams.put("title", title)
                 pageParams.put("id", id)
                 pageParams.put("releaseDate", releaseDate)
-                pageParams.put("webUrl", "http://czt.nmg.gov.cn/yjs/business/page/list?type=2&basicId=150623zf")
+                pageParams.put("webUrl", "http://czt.nmg.gov.cn/yjs/business/page/list?type=2&basicId=150622zf")
                 sendGet(pageResult, "详情页", detailUrl, pageParams)
             }
             return pageResult
@@ -84,7 +84,7 @@ class EEDS_ETKQQ_YS implements IparseScript {
                 return pageResult
             }
 
-            String pageTitle = "地方经济四期\\内蒙古自治区各区县预决算报告\\鄂尔多斯\\鄂托克前旗\\预算"
+            String pageTitle = "地方经济四期\\内蒙古自治区各区县预决算报告\\鄂尔多斯\\准格尔旗\\预算"
             String pushtime = ParseToolsUtils.formatPushTimeDateTime(releaseDate)
             Map<String, Pair<String, String>> detailDataMap = buildFileDataMap(pageResult, pageTitle, title + "*地方经济",
                     releaseDate, pushtime, detailUrl, buildHtmlFileName(title), webUrl, detailUrl)
@@ -113,7 +113,7 @@ class EEDS_ETKQQ_YS implements IparseScript {
             String releaseDate = cleanText(page.request.getExtra("releaseDate"))
             String webUrl = cleanText(page.request.getExtra("webUrl"))
             String detailUrl = cleanText(page.request.getExtra("detailUrl"))
-            String pageTitle = "地方经济四期\\内蒙古自治区各区县预决算报告\\鄂尔多斯\\鄂托克前旗\\预算"
+            String pageTitle = "地方经济四期\\内蒙古自治区各区县预决算报告\\鄂尔多斯\\准格尔旗\\预算"
             String pushtime = ParseToolsUtils.formatPushTimeDateTime(releaseDate)
             title = title +  "*地方经济"
             List<Map<String, Object>> nodes = extractObjectList(page.getRawText(), "files")
@@ -129,7 +129,7 @@ class EEDS_ETKQQ_YS implements IparseScript {
                 String normalizedFileName = normalizeFileName(fileName, fileSuffix, title)
                 Map<String, Pair<String, String>> dataMap = new LinkedHashMap<>()
                 addDataMap(pageResult, dataMap, Pair.of("release_frequency", "披露频率"), "年", true)
-                addDataMap(pageResult, dataMap, Pair.of("statistic_area", "统计区域"), "内蒙古自治区鄂尔多斯市鄂托克前旗", true)
+                addDataMap(pageResult, dataMap, Pair.of("statistic_area", "统计区域"), "内蒙古自治区鄂尔多斯市准格尔旗", true)
                 addDataMap(pageResult, dataMap, Pair.of("pageTitle", "路径"), pageTitle, true)
                 addDataMap(pageResult, dataMap, Pair.of("raw_info_date", "原始发布日期"), releaseDate, false)
                 addDataMap(pageResult, dataMap, CrawlerDataCommonFieldsEnum.PUSHTIME, pushtime, true)
@@ -195,7 +195,7 @@ class EEDS_ETKQQ_YS implements IparseScript {
                                                                       String fileName, String webUrl, String detailUrl) {
         Map<String, Pair<String, String>> dataMap = new LinkedHashMap<>()
         addDataMap(pageResult, dataMap, Pair.of("release_frequency", "披露频率"), "年", true)
-        addDataMap(pageResult, dataMap, Pair.of("statistic_area", "统计区域"), "内蒙古自治区鄂尔多斯市鄂托克前旗", true)
+        addDataMap(pageResult, dataMap, Pair.of("statistic_area", "统计区域"), "内蒙古自治区鄂尔多斯市准格尔旗", true)
         addDataMap(pageResult, dataMap, Pair.of("pageTitle", "路径"), pageTitle, true)
         addDataMap(pageResult, dataMap, Pair.of("raw_info_date", "原始发布日期"), releaseDate, false)
         addDataMap(pageResult, dataMap, CrawlerDataCommonFieldsEnum.PUSHTIME, pushtime, true)

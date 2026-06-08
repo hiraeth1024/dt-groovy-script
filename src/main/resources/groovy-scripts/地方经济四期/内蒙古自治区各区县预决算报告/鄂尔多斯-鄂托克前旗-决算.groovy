@@ -23,7 +23,7 @@ import java.util.Map
  *
 
 
- * 起始请求链接: https://czt.nmg.gov.cn/yjs/business/basic/select?id=150624zf&type=3&p=1
+ * 起始请求链接: https://czt.nmg.gov.cn/yjs/business/basic/select?id=150623zf&type=3&p=1
  * 起始请求方式: GET
  */
 class EEDS_ETKQQ_JS implements IparseScript {
@@ -64,7 +64,7 @@ class EEDS_ETKQQ_JS implements IparseScript {
                 pageParams.put("title", title)
                 pageParams.put("id", id)
                 pageParams.put("releaseDate", releaseDate)
-                pageParams.put("webUrl", "http://czt.nmg.gov.cn/yjs/business/page/list?type=3&basicId=150624zf")
+                pageParams.put("webUrl", "http://czt.nmg.gov.cn/yjs/business/page/list?type=3&basicId=150623zf")
                 sendGet(pageResult, "详情页", detailUrl, pageParams)
             }
             return pageResult
