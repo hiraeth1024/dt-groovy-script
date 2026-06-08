@@ -1,0 +1,171 @@
+import com.gildata.spider.base.common.constant.CrawlerDataConstants
+import com.gildata.spider.base.starter.groovy.IparseScript
+import com.gildata.spider.base.starter.groovy.enums.CrawlerDataCommonFieldsEnum
+import com.gildata.spider.base.starter.groovy.model.ParsePageRequest
+import com.gildata.spider.base.starter.groovy.model.ParsePageResult
+import com.gildata.spider.base.starter.groovy.util.ParseToolsUtils
+import org.apache.commons.lang3.StringUtils
+import org.apache.commons.lang3.tuple.Pair
+import us.codecraft.webmagic.Page
+import us.codecraft.webmagic.Request
+import us.codecraft.webmagic.selector.Html
+import us.codecraft.webmagic.selector.Json
+
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.ArrayList
+import java.util.LinkedHashMap
+import java.util.List
+import java.util.Map
+
+/**
+ * 配置ID: 1308643596039094272
+ * 配置名称: 华尔街见闻-资讯-股市
+ * 起始请求链接: https://api-one-wscn.awtmt.com/apiv1/content/information-flow?channel=shares&accept=article&limit=20&action=upglide
+ * 起始请求方式: GET
+ * 
+ * 自动生成脚本，需进一步修改，请务必验证脚本细节是否正确
+ */
+class ParseClass_1308643596039094272 implements IparseScript {
+    @Override
+    ParsePageResult doParse(ParsePageRequest request) {
+        // page - 下载的页面  ｜  pageResult - 返回的信息
+        Page page = request.getPage()
+        ParsePageResult pageResult = new ParsePageResult()
+        // parser - 标识当前请求应进入哪个页面解析分支
+        String parser = page.getRequest().getExtra("parser")
+        if (StringUtils.isBlank(parser)) {
+            // 起始页为：'0001'
+            parser = '0001'
+        }
+
+        if (StringUtils.equals(parser, '0001')) {
+            // 页面: 列表页
+            // 列表选择器 - 抽取多个片段进行单独处理
+            def nodes = new Json(page.getRawText()).jsonPath('data.items[*].resource').all() ?: []
+            if (nodes == null || nodes.isEmpty()) {
+                // 没有匹配到任何列表节点时，当前页面无需继续处理
+                return pageResult
+            }
+            nodes.each { node ->
+                // 处理各个独立片段
+                Map<String, Object> resultMap = new LinkedHashMap<>()
+                List<Map<String, Object>> candidatePool = new ArrayList<>()
+                String titleCandidateValue_0 = new Json(node.toString()).jsonPath('title').get()
+                candidatePool.add([fieldName: 'title', value: titleCandidateValue_0, priority: 0, pageIndex: 0])
+                String authorCandidateValue_1 = new Json(node.toString()).jsonPath('author.display_name').get()
+                candidatePool.add([fieldName: 'author', value: authorCandidateValue_1, priority: 0, pageIndex: 0])
+                String mtccCandidateValue_2 = new Json(node.toString()).jsonPath('source_name').get()
+                candidatePool.add([fieldName: 'mtcc', value: mtccCandidateValue_2, priority: 0, pageIndex: 0])
+                String idCandidateValue_3 = new Json(node.toString()).jsonPath('id').get()
+                candidatePool.add([fieldName: 'id', value: idCandidateValue_3, priority: 0, pageIndex: 0])
+                String real_urlCandidateValue_4 = "https://api-one-wscn.awtmt.com/apiv1/content/articles/${idCandidateValue_3}?extract=0&accept_theme=theme%2Cpremium-theme"
+                candidatePool.add([fieldName: 'real_url', value: real_urlCandidateValue_4, priority: 0, pageIndex: 0])
+                String weburlCandidateValue_5 = new Json(node.toString()).jsonPath('uri').get()
+                candidatePool.add([fieldName: 'weburl', value: weburlCandidateValue_5, priority: 0, pageIndex: 0])
+                Map<String, Map<String, Object>> bestCandidateMap = new LinkedHashMap<>()
+                candidatePool.each { candidate ->
+                    if (StringUtils.isBlank((String) candidate.value)) { return }
+                    def best = bestCandidateMap.get(candidate.fieldName)
+                    if (best == null || candidate.priority > best.priority || (candidate.priority == best.priority && candidate.pageIndex > best.pageIndex)) {
+                        bestCandidateMap.put(candidate.fieldName, candidate)
+                    }
+                }
+                bestCandidateMap.each { k, v -> resultMap.put(k, v.value) }
+                String title = resultMap.get('title')
+                String author = resultMap.get('author')
+                String mtcc = resultMap.get('mtcc')
+                String id = resultMap.get('id')
+                String real_url = resultMap.get('real_url')
+                String weburl = resultMap.get('weburl')
+
+                if (StringUtils.isBlank(title)) {
+                    // 必填字段缺失，不使用该条数据
+                    return
+                }
+                if (StringUtils.isNotBlank(real_url)) {
+                    // 当前字段作为跳转链接，构造子页面请求并透传上下文字段
+                    String nextUrl = ParseToolsUtils.resolve(page.getRequest().getUrl(), real_url)
+                    Request nextRequest = new Request(nextUrl)
+                    nextRequest.putExtra("parser", '0002')
+                    nextRequest.putExtra('title', title)
+                    nextRequest.putExtra('author', author)
+                    nextRequest.putExtra('mtcc', mtcc)
+                    nextRequest.putExtra('id', id)
+                    nextRequest.putExtra('real_url', nextUrl)
+                    nextRequest.putExtra('weburl', weburl)
+                    // 添加子请求
+                    pageResult.addChildRequest(nextRequest)
+                }
+            }
+        }
+        else if (StringUtils.equals(parser, '0002')) {
+            // 页面: 详情页
+            // 提取上一个页面传递的字段信息
+            String title = page.getRequest().getExtra('title')
+            String author = page.getRequest().getExtra('author')
+            String mtcc = page.getRequest().getExtra('mtcc')
+            String id = page.getRequest().getExtra('id')
+            String real_url = page.getRequest().getExtra('real_url')
+            String weburl = page.getRequest().getExtra('weburl')
+
+            Map<String, Object> resultMap = new LinkedHashMap<>()
+            List<Map<String, Object>> candidatePool = new ArrayList<>()
+            candidatePool.add([fieldName: 'title', value: title, priority: 0, pageIndex: 0])
+            candidatePool.add([fieldName: 'author', value: author, priority: 0, pageIndex: 0])
+            candidatePool.add([fieldName: 'mtcc', value: mtcc, priority: 0, pageIndex: 0])
+            candidatePool.add([fieldName: 'id', value: id, priority: 0, pageIndex: 0])
+            candidatePool.add([fieldName: 'real_url', value: real_url, priority: 0, pageIndex: 0])
+            candidatePool.add([fieldName: 'weburl', value: weburl, priority: 0, pageIndex: 0])
+            String pushtimeCandidateValue_0 = new Json(page.getRawText()).jsonPath('data.display_time').get()
+            candidatePool.add([fieldName: 'pushtime', value: pushtimeCandidateValue_0, priority: 0, pageIndex: 1])
+            String contentCandidateValue_1 = new Json(page.getRawText()).jsonPath('data.content').get()
+            candidatePool.add([fieldName: 'content', value: contentCandidateValue_1, priority: 0, pageIndex: 1])
+            Map<String, Map<String, Object>> bestCandidateMap = new LinkedHashMap<>()
+            candidatePool.each { candidate ->
+                if (StringUtils.isBlank((String) candidate.value)) { return }
+                def best = bestCandidateMap.get(candidate.fieldName)
+                if (best == null || candidate.priority > best.priority || (candidate.priority == best.priority && candidate.pageIndex > best.pageIndex)) {
+                    bestCandidateMap.put(candidate.fieldName, candidate)
+                }
+            }
+            bestCandidateMap.each { k, v -> resultMap.put(k, v.value) }
+            title = resultMap.get('title') ?: title
+            author = resultMap.get('author') ?: author
+            mtcc = resultMap.get('mtcc') ?: mtcc
+            id = resultMap.get('id') ?: id
+            real_url = resultMap.get('real_url') ?: real_url
+            weburl = resultMap.get('weburl') ?: weburl
+            String pushtime = resultMap.get('pushtime')
+            String content = resultMap.get('content')
+
+            if (StringUtils.isBlank(content)) {
+                // 必填字段缺失，不使用该条数据
+                return pageResult
+            }
+            // 格式化 发布时间
+            pushtime = ParseToolsUtils.formatPushTimeDateTime(pushtime)
+            // 返回采集到的数据
+            List<Map<String, Pair<String, Object>>> dataList = new ArrayList<>()
+            Map<String, Pair<String, Object>> dataMap = new LinkedHashMap<>()
+            dataMap.put(CrawlerDataCommonFieldsEnum.TITLE.getName(), Pair.of(CrawlerDataCommonFieldsEnum.TITLE.getAlias(), title))
+            dataMap.put(CrawlerDataCommonFieldsEnum.AUTHOR.getName(), Pair.of(CrawlerDataCommonFieldsEnum.AUTHOR.getAlias(), author))
+            dataMap.put(CrawlerDataCommonFieldsEnum.MTCC.getName(), Pair.of(CrawlerDataCommonFieldsEnum.MTCC.getAlias(), mtcc))
+            dataMap.put(CrawlerDataCommonFieldsEnum.WEB_URL.getName(), Pair.of(CrawlerDataCommonFieldsEnum.WEB_URL.getAlias(), weburl))
+            dataMap.put(CrawlerDataCommonFieldsEnum.PUSHTIME.getName(), Pair.of(CrawlerDataCommonFieldsEnum.PUSHTIME.getAlias(), pushtime))
+            dataMap.put(CrawlerDataCommonFieldsEnum.CONTENT.getName(), Pair.of(CrawlerDataCommonFieldsEnum.CONTENT.getAlias(), content))
+            dataList.add(dataMap)
+            pageResult.addDataMap(CrawlerDataConstants.CRAWLER_DATA_KEY, dataList)
+
+            // 添加去重键
+            pageResult.addDedupKey(CrawlerDataCommonFieldsEnum.TITLE.getName())
+            pageResult.addDedupKey(CrawlerDataCommonFieldsEnum.AUTHOR.getName())
+            pageResult.addDedupKey(CrawlerDataCommonFieldsEnum.MTCC.getName())
+            pageResult.addDedupKey(CrawlerDataCommonFieldsEnum.WEB_URL.getName())
+            pageResult.addDedupKey(CrawlerDataCommonFieldsEnum.PUSHTIME.getName())
+            pageResult.addDedupKey(CrawlerDataCommonFieldsEnum.CONTENT.getName())
+        }
+
+        return pageResult
+    }
+}

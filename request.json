@@ -1,0 +1,604 @@
+{
+  "config_id": "1308643596039094272",
+  "config_name": "华尔街见闻-资讯-股市",
+  "backend_type": "kafka",
+  "start_page_id": "0001",
+  "backend_params": {
+    "topic": "icp_news"
+  },
+  "data_dup_seconds": null,
+  "job_status_log": false,
+  "upload_file_with_info": false,
+  "task_item": {},
+  "start_links": [
+    {
+      "page_id": null,
+      "calc_params": null,
+      "url": "https://api-one-wscn.awtmt.com/apiv1/content/information-flow?channel=shares&accept=article&limit=20&action=upglide",
+      "params": null,
+      "file_name": null,
+      "randomId": null,
+      "name": null,
+      "alias": null,
+      "value": null,
+      "options": [],
+      "formulas": null,
+      "selectors": null,
+      "children": null
+    }
+  ],
+  "pages": [
+    {
+      "page_name": "列表页",
+      "page_id": "0001",
+      "request_settings": {
+        "use_proxy": true,
+        "encoding": "",
+        "method": "",
+        "headers": {},
+        "timeout": null
+      },
+      "upload_settings": {
+        "xpaths": [],
+        "img_xpaths": [],
+        "iframe_xpaths": [],
+        "disallow_xpaths": [],
+        "use_proxy": true,
+        "file_expire_seconds": 0
+      },
+      "fields": [
+        {
+          "randomId": "1657876518814481",
+          "name": "title",
+          "alias": "资讯标题（必填）",
+          "value": null,
+          "options": [
+            {
+              "name": "priority",
+              "value": 0
+            },
+            {
+              "name": "expire_seconds",
+              "value": 1
+            },
+            {
+              "name": "required",
+              "value": true
+            },
+            {
+              "name": "repeated",
+              "value": false
+            },
+            {
+              "name": "backend",
+              "value": true
+            },
+            {
+              "name": "unique",
+              "value": true
+            },
+            {
+              "name": "payload",
+              "value": false
+            },
+            {
+              "name": "parse",
+              "value": true
+            },
+            {
+              "name": "upload",
+              "value": false
+            },
+            {
+              "name": "system",
+              "value": false
+            }
+          ],
+          "formulas": null,
+          "selectors": [
+            {
+              "selector_type": "jpath",
+              "rules": [
+                "title"
+              ]
+            }
+          ],
+          "children": null
+        },
+        {
+          "randomId": "1657877466422917",
+          "name": "author",
+          "alias": "撰写作者",
+          "value": null,
+          "options": [
+            {
+              "name": "priority",
+              "value": 0
+            },
+            {
+              "name": "expire_seconds",
+              "value": 1
+            },
+            {
+              "name": "required",
+              "value": false
+            },
+            {
+              "name": "repeated",
+              "value": false
+            },
+            {
+              "name": "backend",
+              "value": true
+            },
+            {
+              "name": "unique",
+              "value": true
+            },
+            {
+              "name": "payload",
+              "value": false
+            },
+            {
+              "name": "parse",
+              "value": true
+            },
+            {
+              "name": "upload",
+              "value": false
+            },
+            {
+              "name": "system",
+              "value": false
+            }
+          ],
+          "formulas": null,
+          "selectors": [
+            {
+              "selector_type": "jpath",
+              "rules": [
+                "author.display_name"
+              ]
+            }
+          ],
+          "children": null
+        },
+        {
+          "randomId": "1658103936237370",
+          "name": "mtcc",
+          "alias": "媒体出处（必填）",
+          "value": null,
+          "options": [
+            {
+              "name": "priority",
+              "value": 0
+            },
+            {
+              "name": "expire_seconds",
+              "value": 1
+            },
+            {
+              "name": "required",
+              "value": false
+            },
+            {
+              "name": "repeated",
+              "value": false
+            },
+            {
+              "name": "backend",
+              "value": true
+            },
+            {
+              "name": "unique",
+              "value": true
+            },
+            {
+              "name": "payload",
+              "value": false
+            },
+            {
+              "name": "parse",
+              "value": true
+            },
+            {
+              "name": "upload",
+              "value": false
+            },
+            {
+              "name": "system",
+              "value": false
+            }
+          ],
+          "formulas": [
+            {
+              "name": "bool_expression",
+              "args": null,
+              "code": "004_003_001",
+              "params": [
+                {
+                  "name": "expression",
+                  "value": "'{0}' == ''"
+                },
+                {
+                  "name": "true_value",
+                  "value": "华尔街见闻"
+                },
+                {
+                  "name": "false_value",
+                  "value": "{0}"
+                }
+              ],
+              "alias": "布尔表达式"
+            }
+          ],
+          "selectors": [
+            {
+              "selector_type": "jpath",
+              "rules": [
+                "source_name"
+              ]
+            }
+          ],
+          "children": null
+        },
+        {
+          "randomId": "1657877339838896",
+          "name": "id",
+          "alias": "id",
+          "value": null,
+          "options": [
+            {
+              "name": "priority",
+              "value": 0
+            },
+            {
+              "name": "expire_seconds",
+              "value": 1
+            },
+            {
+              "name": "required",
+              "value": false
+            },
+            {
+              "name": "repeated",
+              "value": false
+            },
+            {
+              "name": "backend",
+              "value": false
+            },
+            {
+              "name": "unique",
+              "value": false
+            },
+            {
+              "name": "payload",
+              "value": false
+            },
+            {
+              "name": "parse",
+              "value": true
+            },
+            {
+              "name": "upload",
+              "value": false
+            },
+            {
+              "name": "system",
+              "value": false
+            }
+          ],
+          "formulas": null,
+          "selectors": [
+            {
+              "selector_type": "jpath",
+              "rules": [
+                "id"
+              ]
+            }
+          ],
+          "children": null
+        },
+        {
+          "page_id": "0002",
+          "calc_params": null,
+          "url": "https://api-one-wscn.awtmt.com/apiv1/content/articles/$id?extract=0&accept_theme=theme%2Cpremium-theme",
+          "params": null,
+          "file_name": null,
+          "randomId": "1657876688356101",
+          "name": "real_url",
+          "alias": "real_url",
+          "value": null,
+          "options": [
+            {
+              "name": "priority",
+              "value": 0
+            },
+            {
+              "name": "expire_seconds",
+              "value": 1
+            },
+            {
+              "name": "required",
+              "value": false
+            },
+            {
+              "name": "repeated",
+              "value": false
+            },
+            {
+              "name": "backend",
+              "value": false
+            },
+            {
+              "name": "unique",
+              "value": false
+            },
+            {
+              "name": "payload",
+              "value": false
+            },
+            {
+              "name": "parse",
+              "value": true
+            },
+            {
+              "name": "upload",
+              "value": false
+            },
+            {
+              "name": "system",
+              "value": false
+            }
+          ],
+          "formulas": null,
+          "selectors": [],
+          "children": null
+        },
+        {
+          "randomId": "1657877399272645",
+          "name": "weburl",
+          "alias": "资讯链接（必填）",
+          "value": null,
+          "options": [
+            {
+              "name": "priority",
+              "value": 0
+            },
+            {
+              "name": "expire_seconds",
+              "value": 1
+            },
+            {
+              "name": "required",
+              "value": false
+            },
+            {
+              "name": "repeated",
+              "value": false
+            },
+            {
+              "name": "backend",
+              "value": true
+            },
+            {
+              "name": "unique",
+              "value": true
+            },
+            {
+              "name": "payload",
+              "value": false
+            },
+            {
+              "name": "parse",
+              "value": true
+            },
+            {
+              "name": "upload",
+              "value": false
+            },
+            {
+              "name": "system",
+              "value": false
+            }
+          ],
+          "formulas": null,
+          "selectors": [
+            {
+              "selector_type": "jpath",
+              "rules": [
+                "uri"
+              ]
+            }
+          ],
+          "children": null
+        }
+      ],
+      "gfields": [],
+      "selectors": [
+        {
+          "selector_type": "jpath",
+          "rules": [
+            "data.items[*].resource"
+          ]
+        }
+      ],
+      "formulas": null
+    },
+    {
+      "page_name": "详情页",
+      "page_id": "0002",
+      "request_settings": {
+        "use_proxy": true,
+        "encoding": "",
+        "method": "",
+        "headers": {},
+        "timeout": null
+      },
+      "upload_settings": {
+        "xpaths": [],
+        "img_xpaths": [],
+        "iframe_xpaths": [],
+        "disallow_xpaths": [],
+        "use_proxy": true,
+        "file_expire_seconds": 0
+      },
+      "fields": [
+        {
+          "randomId": "1657876720617703",
+          "name": "pushtime",
+          "alias": "发布时间（必填）",
+          "value": null,
+          "options": [
+            {
+              "name": "priority",
+              "value": 0
+            },
+            {
+              "name": "expire_seconds",
+              "value": 1
+            },
+            {
+              "name": "required",
+              "value": false
+            },
+            {
+              "name": "repeated",
+              "value": false
+            },
+            {
+              "name": "backend",
+              "value": true
+            },
+            {
+              "name": "unique",
+              "value": true
+            },
+            {
+              "name": "payload",
+              "value": false
+            },
+            {
+              "name": "parse",
+              "value": true
+            },
+            {
+              "name": "upload",
+              "value": false
+            },
+            {
+              "name": "system",
+              "value": false
+            }
+          ],
+          "formulas": [
+            {
+              "name": "time_convert",
+              "args": null,
+              "code": "003_002_001",
+              "params": [
+                {
+                  "name": "mode",
+                  "value": "时间戳转时间格式"
+                },
+                {
+                  "name": "formatter",
+                  "value": "%Y-%m-%d %H:%M:%S"
+                },
+                {
+                  "name": "formatter_diy",
+                  "value": null
+                }
+              ],
+              "alias": "时间格式转换"
+            }
+          ],
+          "selectors": [
+            {
+              "selector_type": "jpath",
+              "rules": [
+                "data.display_time"
+              ]
+            }
+          ],
+          "children": null
+        },
+        {
+          "randomId": "1657876722578474",
+          "name": "content",
+          "alias": "资讯正文（必填）",
+          "value": null,
+          "options": [
+            {
+              "name": "priority",
+              "value": 0
+            },
+            {
+              "name": "expire_seconds",
+              "value": 1
+            },
+            {
+              "name": "required",
+              "value": true
+            },
+            {
+              "name": "repeated",
+              "value": false
+            },
+            {
+              "name": "backend",
+              "value": true
+            },
+            {
+              "name": "unique",
+              "value": true
+            },
+            {
+              "name": "payload",
+              "value": false
+            },
+            {
+              "name": "parse",
+              "value": true
+            },
+            {
+              "name": "upload",
+              "value": false
+            },
+            {
+              "name": "system",
+              "value": false
+            }
+          ],
+          "formulas": [
+            {
+              "name": "disxpath",
+              "args": null,
+              "code": "001_006_004",
+              "params": [
+                {
+                  "name": "rules",
+                  "value": "//div[@style=\"font-size: 12px;font-family: 黑体;color: #666;line-height: 20px;\"]&&//div[@style=\"color: #666; margin:80px 0 15px;\"]&&//p[@style=\"color: #8d9bad;\"]"
+                }
+              ],
+              "alias": "XPATH剔除"
+            }
+          ],
+          "selectors": [
+            {
+              "selector_type": "jpath",
+              "rules": [
+                "data.content"
+              ]
+            }
+          ],
+          "children": null
+        }
+      ],
+      "gfields": [],
+      "selectors": null,
+      "formulas": null
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "prompts": {
+    "27a9eff3-5d2b-474a-a4fd-9ef8d43f89b2": {
+      "id": "27a9eff3-5d2b-474a-a4fd-9ef8d43f89b2",
+      "name": "crawler_prompt",
+      "content": "请严格按照@D:\\code\\Java\\groovy_runner\\Groovy脚本代码规范.md,对脚本进行修改，脚本在",
+      "createdAt": 1778316414594,
+      "updatedAt": 1778643008596
+    }
+  }
+}
