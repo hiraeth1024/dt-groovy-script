@@ -60,9 +60,9 @@ public class Main implements PageProcessor {
             .build();
     private FileManage fileManage = new FileManage();
 
-    private String groovyFileName = "地方经济四期/内蒙古自治区各区县预决算报告/鄂尔多斯-伊金霍洛旗-预算.groovy";
+    private String groovyFileName = "地方经济四期/内蒙古自治区各区县预决算报告/鄂尔多斯-伊金霍洛旗-决算.groovy";
 //    String startUrl = "https://www.energytrend.cn/solar-price.html";
-    String startUrl = "https://czt.nmg.gov.cn/yjs/business/basic/select?id=150627zf&type=2&p=1";
+    String startUrl = "https://czt.nmg.gov.cn/yjs/business/basic/select?id=150627zf&type=3&p=1";
 //    String startUrl = "https://www.baidu.com/";
 //    String startUrl = "https://www.spdrgoldshares.com/assets/dynamic/GLD/GLD_US_archive_EN.csv";
     String methodType = CustomRequestTypeEnum.GET.getMethodType();
